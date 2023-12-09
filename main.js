@@ -28,7 +28,7 @@ del_file = (name) => {
     app.files.splice(file_index, 1);
 };
 get_url = (file_name) => {
-    return `${app.HF地址}/${app.项目ID}/resolve/main/${file_name}`//"https://hf-mirror.com/api/models/TheBloke/SUS-Chat-34B-AWQ/"
+    return `${app.HF地址}/${app.项目ID}/resolve/main/${file_name.split('/')[1]}`//"https://hf-mirror.com/api/models/TheBloke/SUS-Chat-34B-AWQ/"
 }
 down_file = (url, file_dir, file) => {
     // child_process.execFile(process.execPath.replace(/wd-down.+/, "wd-down\\") + "aria2c.exe",
@@ -55,10 +55,10 @@ down_file = (url, file_dir, file) => {
         "split": app.线程数 - 1,
         "max-connection-per-server": app.线程数,
         "user-agent": "Opera\/9.80 (Windows NT 6.0) Presto\/2.12.388 Version\/12.14",
-        out: file.name
+        out: file.name.split('/')[1]
     };
     let json = {}
-    json.id = file.name;
+    json.id = file.name
     json.jsonrpc = "2.0";
     json.method = "aria2.addUri";
     json.params = [];
@@ -71,13 +71,14 @@ down_file = (url, file_dir, file) => {
 }
 获取文件列表 = async () => {
     app.loading = true
-    app.files = (await get_files()).map(i => ({ name: app.项目ID.split('/')[1]+'/'+i.rfilename, state: '未下载', id: '' }))
+    app.files = (await get_files()).map(i => ({ name: app.项目ID.split('/')[1] + '/' + i.rfilename, state: '未下载', id: '' }))
     app.loading = false
 }
 下载 = async () => {
     app.downloading = true
     app.files.forEach(element => {
-        down_file(get_url(element.name), app.项目ID.split('/')[1], element)
+        if (element.state == '未下载')
+            down_file(get_url(element.name), app.项目ID.split('/')[1], element)
 
     });
 }
