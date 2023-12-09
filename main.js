@@ -23,6 +23,10 @@ get_files = async () => {
     j = await f.json()
     return j.siblings
 }
+del_file = (name) => {
+  let file_index = app.files.findIndex((a) => a.name == name);;
+  app.files.splice(file_index, 1);
+};
 get_url = (file_name) => {
     return `${app.HF地址}/${app.项目ID}/resolve/main/${file_name}`//"https://hf-mirror.com/api/models/TheBloke/SUS-Chat-34B-AWQ/"
 }
