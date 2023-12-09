@@ -105,7 +105,7 @@ down_file = (url, file_dir, file) => {
                         (app.files.find(file => file.id == i.gid)).state = formatFileSize(i.downloadSpeed) + "(" + Math.round(i.completedLength / i.totalLength * 100) + "%)"
                     } catch (error) { 
                         console.log('未知任务，可能由其他程序创建',i)
-                    
+                        app.files.push(    { name: i.files[0].path, state: '现有任务', id: i.gid })
                     
                     }
                 })
