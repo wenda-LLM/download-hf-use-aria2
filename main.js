@@ -10,8 +10,8 @@ app = new Vue({
         线程数: 8,
         files: [],
         b_Aria2_已连接: false,
-        loading:false,
-        downloading:false,
+        loading: false,
+        downloading: false,
     }),
     methods: {
     }
@@ -24,8 +24,8 @@ get_files = async () => {
     return j.siblings
 }
 del_file = (name) => {
-  let file_index = app.files.findIndex((a) => a.name == name);;
-  app.files.splice(file_index, 1);
+    let file_index = app.files.findIndex((a) => a.name == name);;
+    app.files.splice(file_index, 1);
 };
 get_url = (file_name) => {
     return `${app.HF地址}/${app.项目ID}/resolve/main/${file_name}`//"https://hf-mirror.com/api/models/TheBloke/SUS-Chat-34B-AWQ/"
@@ -52,7 +52,7 @@ down_file = (url, file_dir, file) => {
     let options = {
         "dir": file_dir,
         "min-split-size": "4M",
-        "split": app.线程数-1,
+        "split": app.线程数 - 1,
         "max-connection-per-server": app.线程数,
         "user-agent": "Opera\/9.80 (Windows NT 6.0) Presto\/2.12.388 Version\/12.14",
         out: file.name
@@ -70,12 +70,12 @@ down_file = (url, file_dir, file) => {
     ws.send(JSON.stringify(json));
 }
 获取文件列表 = async () => {
-    app.loading=true
-    app.files = (await get_files()).map(i => ({ name: i.rfilename, state: '未下载', id: '' }))
-    app.loading=false
+    app.loading = true
+    app.files = (await get_files()).map(i => ({ name: app.项目ID.split('/')[1]+'/'+i.rfilename, state: '未下载', id: '' }))
+    app.loading = false
 }
 下载 = async () => {
-    app.downloading=true
+    app.downloading = true
     app.files.forEach(element => {
         down_file(get_url(element.name), app.项目ID.split('/')[1], element)
 
@@ -83,19 +83,19 @@ down_file = (url, file_dir, file) => {
 }
 连接 = async (show = true) => {
     window.ws = new WebSocket(app.Aria2_url);
-    let connected=false
+    let connected = false
     ws.onerror = function (evt) {
         if (show) alert("Aria2连接失败")
         app.b_Aria2_已连接 = false
     }
     ws.onclose = function (evt) {
-        if (connected)  alert("Aria2连接断开")
+        if (connected) alert("Aria2连接断开")
         app.b_Aria2_已连接 = false
     }
     ws.onopen = function (evt) {
         if (show) alert("Aria2连接成功")
         app.b_Aria2_已连接 = true
-        connected=true
+        connected = true
     }
     ws.onmessage = function (evt) {
         //console.log(evt.data);
@@ -107,10 +107,10 @@ down_file = (url, file_dir, file) => {
                 evt.result.forEach(i => {
                     try {
                         (app.files.find(file => file.id == i.gid)).state = formatFileSize(i.downloadSpeed) + "(" + Math.round(i.completedLength / i.totalLength * 100) + "%)"
-                    } catch (error) { 
-                        console.log('未知任务，可能由其他程序创建',i)
-                        app.files.push(    { name: i.files[0].path, state: '现有任务', id: i.gid })
-                    
+                    } catch (error) {
+                        console.log('未知任务，可能由其他程序创建', i)
+                        app.files.push({ name: i.files[0].path, state: '现有任务', id: i.gid })
+
                     }
                 })
             }
