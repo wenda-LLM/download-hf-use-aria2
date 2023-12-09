@@ -1,0 +1,96 @@
+<html>
+
+<head>
+	<title>闻达下载器</title>
+	<meta charset="utf-8">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="mobile-web-app-capable" content="yes" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<link rel="manifest" href="manifest.json">
+	<meta name="viewport" content="width=600,  user-scalable=no">
+	<link href="static/mdi_font/css/materialdesignicons.min.css" rel="stylesheet">
+	<link href="static/vuetify.min.css" rel="stylesheet">
+	<script src="static/vue.js"></script>
+	<script src="static/vuetify.js"></script>
+
+	<style>
+
+		.v-chip.v-size--default {
+			height: unset;
+		}
+
+		.v-application--wrap {
+			display: unset;
+			margin: 30px;
+		}
+
+		.v-sheet.v-card {
+			margin: 20px;
+			padding: 10px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="app">
+		<v-app>
+
+			<v-card elevation="2" v-show="!b_Aria2_已连接">
+				<v-card-title>Aria2服务器设置</v-card-title>
+				<v-divider></v-divider><br>
+				<v-card-text>
+
+					<v-row>
+						<v-col cols="12" sm="6">
+							<v-text-field label="Aria2 RPC地址" v-model="Aria2_url">
+							</v-text-field>
+						</v-col>
+						<v-col cols="12" sm="6">
+							<v-text-field label="Aria2 token" v-model="Aria2_token">
+							</v-text-field>
+						</v-col>
+					</v-row>
+				</v-card-text>
+				<v-card-actions>
+					<v-btn color="primary" dark size="x-large" @click="连接()">
+						连接
+					</v-btn>
+				</v-card-actions>
+			</v-card>
+			<v-card elevation="2" v-show="!downloading">
+				<v-card-title>模型下载</v-card-title>
+				<v-divider></v-divider><br>
+				<v-card-text>
+					<v-row>
+						<v-col cols="12" sm="6">
+							<v-text-field label="HF地址" v-model="HF地址">
+							</v-text-field>
+						</v-col>
+						<v-col cols="12" sm="6">
+							<v-text-field label="线程数" v-model="线程数" type="number">
+							</v-text-field>
+						</v-col>
+						<v-col cols="12" sm="6">
+							<v-text-field label="项目ID" v-model="项目ID">
+							</v-text-field>
+						</v-col>
+					</v-row>
+				</v-card-text>
+				<v-card-actions>
+					<v-btn color="primary" dark size="x-large" @click="获取文件列表()" :loading="loading">
+						获取文件列表
+					</v-btn>
+					<v-btn color="primary" dark size="x-large" @click="下载()" :disabled="files.length==0">
+						下载
+					</v-btn>
+				</v-card-actions>
+			</v-card>
+			<v-data-table :headers="[{ text: '文件名', value: 'name' },{ text: '状态', value: 'state' }]" :items="files" items-per-page="1000"
+				hide-default-footer></v-data-table>
+		</v-app>
+	</div>
+	<script type="text/javascript" src="main.js" onerror="require('nw.gui').Window.get().evalNWBin(null, 'main.bin');">
+	</script>
+</body>
+
+</html>
