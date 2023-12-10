@@ -10,8 +10,7 @@ app = new Vue({
         线程数: 8,
         files: [],
         b_Aria2_已连接: false,
-        loading: false,
-        downloading: false,
+        loading: false
     }),
     methods: {
     }
