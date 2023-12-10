@@ -81,7 +81,7 @@
 						获取文件列表
 					</v-btn>
 					<v-btn color="primary" dark size="x-large" @click="下载()" :disabled="files.length==0">
-						下载
+						全部下载
 					</v-btn>
 				</v-card-actions>
 			</v-card>
@@ -91,6 +91,10 @@
 					<v-icon large text v-show="item.state=='未下载'"
 					  @click="del_file(item.name)">
 					  mdi-delete
+					</v-icon>
+					<v-icon large text v-show="item.state=='未下载'"
+					  @click="down_file(get_url(item.name), app.项目ID.split('/')[1], item)">
+					  mdi-download
 					</v-icon>
 				  </template></v-data-table>
 		</v-app>

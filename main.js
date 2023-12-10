@@ -27,7 +27,8 @@ del_file = (name) => {
     app.files.splice(file_index, 1);
 };
 get_url = (file_name) => {
-    return `${app.HF地址}/${app.项目ID}/resolve/main/${file_name.split('/')[1]}`//"https://hf-mirror.com/api/models/TheBloke/SUS-Chat-34B-AWQ/"
+    return `${app.HF地址}/${app.项目ID}/resolve/main/${encodeURI(file_name.split('/')[1])}`
+    //"https://hf-mirror.com/api/models/TheBloke/SUS-Chat-34B-AWQ/"
 }
 down_file = (url, file_dir, file) => {
     // child_process.execFile(process.execPath.replace(/wd-down.+/, "wd-down\\") + "aria2c.exe",
