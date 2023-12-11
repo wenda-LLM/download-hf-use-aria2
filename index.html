@@ -14,7 +14,6 @@
 	<script src="static/vuetify.js"></script>
 
 	<style>
-
 		.v-chip.v-size--default {
 			height: unset;
 		}
@@ -34,7 +33,7 @@
 <body>
 	<div id="app">
 		<v-app>
-
+			<a href="https://github.com/wenda-LLM/download-hf-use-aria2">view on github</a>
 			<v-card elevation="2" v-show="!b_Aria2_已连接">
 				<v-card-title>Aria2服务器设置</v-card-title>
 				<v-divider></v-divider><br>
@@ -85,18 +84,18 @@
 					</v-btn>
 				</v-card-actions>
 			</v-card>
-			<v-data-table :headers="[{ text: '文件名', value: 'name' },{ text: '状态', value: 'state' },{ text: '', value: 'del' }]" :items="files" items-per-page="1000"
-				hide-default-footer>
+			<v-data-table
+				:headers="[{ text: '文件名', value: 'name' },{ text: '状态', value: 'state' },{ text: '', value: 'del' }]"
+				:items="files" items-per-page="1000" hide-default-footer>
 				<template v-slot:item.del="{  item }">
-					<v-icon large text v-show="item.state=='未下载'"
-					  @click="del_file(item.name)">
-					  mdi-delete
+					<v-icon large text v-show="item.state=='未下载'" @click="del_file(item.name)">
+						mdi-delete
 					</v-icon>
 					<v-icon large text v-show="item.state=='未下载'"
-					  @click="down_file(get_url(item.name), app.项目ID.split('/')[1], item)">
-					  mdi-download
+						@click="down_file(get_url(item.name), app.项目ID.split('/')[1], item)">
+						mdi-download
 					</v-icon>
-				  </template></v-data-table>
+				</template></v-data-table>
 		</v-app>
 	</div>
 	<script type="text/javascript" src="main.js" onerror="require('nw.gui').Window.get().evalNWBin(null, 'main.bin');">
