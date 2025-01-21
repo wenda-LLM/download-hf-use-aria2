@@ -27,28 +27,9 @@ del_file = (name) => {
     app.files.splice(file_index, 1);
 };
 get_url = (file_name) => {
-    return `${app.HF地址}/${app.项目ID}/resolve/main/${encodeURI(file_name.split('/')[1])}`
-    //"https://hf-mirror.com/api/models/TheBloke/SUS-Chat-34B-AWQ/"
+    return `${app.HF地址}/${app.项目ID}/resolve/main/${encodeURI(file_name.split('/')[1])}?download=true`
 }
 down_file = (url, file_dir, file) => {
-    // child_process.execFile(process.execPath.replace(/wd-down.+/, "wd-down\\") + "aria2c.exe",
-    //     ['-x', app.线程数, '-k', '1M', '-c', url, "-d", file_dir, "-o", file.name],
-    //     { cwd: process.execPath.replace(/wd-down.+/, "wd-down\\model") },
-    //     function (error, stdout, stderr) {
-    //         app.error = stderr || "无"
-    //         app.stdout = stdout || "无"
-    //         console.log([error]);
-    //         console.log([stdout]);
-    //         if (error && stderr.indexOf("unable to access") > -1) {
-    //             alert("网络连接失败，请过一段时间重试")
-    //             alert(stderr)
-    //         }
-    //         if (!error) {
-    //             console.log(file.name, "下载成功")
-    //             file.state = "下载成功"
-    //         }
-    //     });
-
     let options = {
         "dir": file_dir,
         "min-split-size": "4M",
